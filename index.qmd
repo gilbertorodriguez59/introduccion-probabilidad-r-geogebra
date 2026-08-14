@@ -1,0 +1,5 @@
+# Portada {.unnumbered}
+
+Este libro presenta una introducción aplicada a la probabilidad mediante teoría, simulación, programación en R y actividades dinámicas con GeoGebra. Los ejemplos se sitúan en contextos de ingeniería y ciencias.
+
+Los capítulos combinan conceptos, procedimientos, interpretación, comprobación computacional y ejercicios para favorecer un aprendizaje gradual.

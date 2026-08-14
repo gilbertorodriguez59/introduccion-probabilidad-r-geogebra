@@ -1,0 +1,380 @@
+# Técnicas de conteo y enumeración
+
+## Objetivos de aprendizaje
+
+Al finalizar este capítulo, el estudiante será capaz de:
+
+- aplicar los principios aditivo y multiplicativo del conteo;
+- construir y leer diagramas de árbol;
+- distinguir entre permutaciones, arreglos y combinaciones;
+- identificar cuándo el orden importa y cuándo no;
+- resolver problemas con y sin repetición;
+- enumerar espacios muestrales finitos con R;
+- verificar resultados exactos mediante simulación;
+- explorar visualmente problemas combinatorios mediante un recurso interactivo.
+
+## ¿Por qué necesitamos contar?
+
+En muchos problemas de probabilidad el espacio muestral contiene un número grande de resultados. Enumerarlos uno por uno puede ser tedioso o prácticamente imposible. Las técnicas de conteo permiten determinar cuántos resultados existen sin escribirlos todos.
+
+Si los resultados elementales son equiprobables, el conteo será posteriormente la base para calcular probabilidades mediante
+
+$$
+P(A)=\frac{|A|}{|S|}.
+$$
+
+En este capítulo nos concentraremos primero en aprender a contar correctamente. La asignación formal de probabilidades se desarrollará en el capítulo siguiente.
+
+## Principio aditivo
+
+Supongamos que una tarea puede realizarse mediante alternativas mutuamente excluyentes. Si la primera alternativa puede realizarse de $n_1$ formas, la segunda de $n_2$ formas, y así sucesivamente, entonces el número total de posibilidades es
+
+$$
+n_1+n_2+\cdots+n_k.
+$$
+
+### Ejemplo
+
+Un laboratorio dispone de 4 sensores ópticos y 3 sensores térmicos. Si se debe elegir exactamente un sensor, existen
+
+$$
+4+3=7
+$$
+
+selecciones posibles.
+
+El principio aditivo se utiliza cuando las alternativas representan caminos diferentes que no ocurren simultáneamente.
+
+## Principio multiplicativo
+
+Si un procedimiento consta de varias etapas y cada etapa admite cierto número de opciones para cada elección previa, el número total de resultados es el producto de las posibilidades de cada etapa.
+
+Si existen $n_1$ opciones en la primera etapa, $n_2$ en la segunda, ..., $n_k$ en la última, entonces
+
+$$
+N=n_1n_2\cdots n_k.
+$$
+
+### Ejemplo: código de identificación
+
+Un código contiene dos letras seguidas de tres dígitos. Si se permiten repeticiones, el número de códigos es
+
+$$
+26^2\cdot 10^3=676000.
+$$
+
+Aquí el procedimiento tiene cinco etapas: dos elecciones de letra y tres elecciones de dígito.
+
+## Diagramas de árbol
+
+Un diagrama de árbol representa un experimento por etapas. Cada rama corresponde a una elección y cada trayectoria completa desde la raíz hasta una hoja representa un resultado.
+
+### Ejemplo: tres transmisiones
+
+Cada transmisión puede ser correcta (C) o errónea (E). Para tres transmisiones,
+
+$$
+|S|=2\cdot2\cdot2=8.
+$$
+
+Los resultados son
+
+$$
+S=\{CCC,CCE,CEC,CEE,ECC,ECE,EEC,EEE\}.
+$$
+
+El árbol no sólo ayuda a contar: también ayuda a evitar omisiones y duplicaciones.
+
+## Factorial
+
+Para un entero positivo $n$ definimos
+
+$$
+n!=n(n-1)(n-2)\cdots2\cdot1,
+$$
+
+y por convenio
+
+$$
+0!=1.
+$$
+
+Ejemplos:
+
+$$
+5!=5\cdot4\cdot3\cdot2\cdot1=120,
+$$
+
+$$
+7!=5040.
+$$
+
+El factorial aparece naturalmente cuando contamos ordenamientos de objetos distintos.
+
+## Permutaciones
+
+Una **permutación** es un ordenamiento de todos los objetos de una colección.
+
+El número de permutaciones de $n$ objetos distintos es
+
+$$
+P_n=n!.
+$$
+
+### Ejemplo
+
+Cinco dispositivos distintos deben colocarse en fila para una prueba. El número de órdenes posibles es
+
+$$
+5!=120.
+$$
+
+## Arreglos o variaciones sin repetición
+
+Cuando se eligen $r$ objetos de un conjunto de $n$ y el orden importa, el número de arreglos es
+
+$$
+P(n,r)=\frac{n!}{(n-r)!}.
+$$
+
+### Ejemplo: asignación de cargos
+
+De 10 estudiantes se eligen presidente, secretario y tesorero. Como los cargos son diferentes, el orden importa:
+
+$$
+P(10,3)=10\cdot9\cdot8=720.
+$$
+
+## Combinaciones
+
+Cuando se eligen $r$ objetos de un conjunto de $n$ y el orden no importa, utilizamos combinaciones:
+
+$$
+\binom{n}{r}=\frac{n!}{r!(n-r)!}.
+$$
+
+### Ejemplo: selección de un comité
+
+De 10 estudiantes se selecciona un comité de 3 personas. Como no existen cargos diferenciados,
+
+$$
+\binom{10}{3}=120.
+$$
+
+La diferencia conceptual es fundamental:
+
+> si cambiar el orden produce un resultado diferente, usamos un conteo ordenado; si no produce un resultado diferente, usamos combinaciones.
+
+## Comparación rápida
+
+| Situación | ¿Importa el orden? | ¿Se permite repetición? | Número de resultados |
+|---|:---:|:---:|---:|
+| ordenar los $n$ objetos | sí | no | $n!$ |
+| elegir y ordenar $r$ de $n$ | sí | no | $\dfrac{n!}{(n-r)!}$ |
+| elegir $r$ de $n$ | no | no | $\binom{n}{r}$ |
+| formar una secuencia de longitud $r$ con $n$ símbolos | sí | sí | $n^r$ |
+
+## Conteo con repetición
+
+Si cada una de $r$ posiciones puede ocuparse por cualquiera de $n$ símbolos y se permite repetición, existen
+
+$$
+n^r
+$$
+
+secuencias.
+
+### Ejemplo
+
+Una contraseña de cuatro dígitos, permitiendo repeticiones y ceros iniciales, tiene
+
+$$
+10^4=10000
+$$
+
+posibilidades.
+
+Si no se permiten repeticiones, el conteo cambia a
+
+$$
+P(10,4)=10\cdot9\cdot8\cdot7=5040.
+$$
+
+## Permutaciones con objetos repetidos
+
+Si existen $n$ objetos, pero algunos son indistinguibles, el número de ordenamientos distintos disminuye.
+
+Si hay $n_1$ objetos de un tipo, $n_2$ de otro, ..., $n_k$ de otro, con
+
+$$
+n_1+n_2+\cdots+n_k=n,
+$$
+
+entonces el número de permutaciones distintas es
+
+$$
+\frac{n!}{n_1!n_2!\cdots n_k!}.
+$$
+
+### Ejemplo
+
+La palabra **RADAR** tiene cinco letras, con dos R y dos A. El número de arreglos distintos es
+
+$$
+\frac{5!}{2!2!}=30.
+$$
+
+## Ejemplo de ingeniería: selección para inspección
+
+Una caja contiene 12 componentes. Se seleccionan 3 para inspección.
+
+Si únicamente interesa qué componentes fueron seleccionados, y no el orden en que se extrajeron,
+
+$$
+|S|=\binom{12}{3}=220.
+$$
+
+Si en cambio el primer componente se asigna a una prueba térmica, el segundo a una prueba eléctrica y el tercero a una prueba mecánica, entonces las posiciones tienen funciones diferentes y el orden sí importa:
+
+$$
+P(12,3)=12\cdot11\cdot10=1320.
+$$
+
+El contexto determina el modelo de conteo apropiado.
+
+## Cálculo con R
+
+R proporciona funciones directas para factoriales y combinaciones:
+
+```{r}
+factorial(6)
+choose(12, 3)
+```
+
+Podemos definir los arreglos sin repetición mediante
+
+```{r}
+arreglos <- function(n, r) {
+  factorial(n) / factorial(n - r)
+}
+
+arreglos(10, 3)
+```
+
+### Enumeración explícita con R
+
+Para tres transmisiones, cada una correcta o errónea:
+
+```{r}
+S <- expand.grid(
+  t1 = c("C", "E"),
+  t2 = c("C", "E"),
+  t3 = c("C", "E")
+)
+
+S
+nrow(S)
+```
+
+El resultado debe contener $2^3=8$ filas.
+
+### Comprobar combinaciones
+
+Podemos enumerar todas las selecciones de 3 elementos tomadas de 5:
+
+```{r}
+combn(1:5, 3)
+choose(5, 3)
+```
+
+La primera instrucción muestra las selecciones y la segunda devuelve únicamente su cantidad.
+
+## Simulación como verificación
+
+La simulación puede utilizarse para comprobar que un mecanismo de generación recorre los tipos de resultados esperados.
+
+Por ejemplo, si generamos aleatoriamente claves de dos letras entre A, B y C:
+
+```{r}
+set.seed(123)
+replicate(10, paste(sample(c("A", "B", "C"), 2,
+                           replace = TRUE), collapse = ""))
+```
+
+El número total de claves posibles es
+
+$$
+3^2=9.
+$$
+
+La simulación no sustituye el conteo exacto, pero ayuda a comprender cómo se generan los resultados.
+
+## Interactivo del capítulo
+
+En la edición web se incluye un recurso interactivo con dos deslizadores, $n$ y $r$, que permite comparar simultáneamente:
+
+$$
+n!,
+$$
+
+$$
+P(n,r)=\frac{n!}{(n-r)!},
+$$
+
+y
+
+$$
+\binom{n}{r}=\frac{n!}{r!(n-r)!}.
+$$
+
+El objetivo es que el estudiante observe visualmente cuánto cambia el número de resultados cuando el orden importa y cuando no importa. También se incluye un árbol de decisiones de tres etapas para ilustrar el principio multiplicativo.
+
+## Estrategia para decidir qué fórmula utilizar
+
+Antes de calcular, contesta estas preguntas:
+
+1. ¿El procedimiento ocurre por etapas?
+2. ¿Las alternativas son mutuamente excluyentes o consecutivas?
+3. ¿Importa el orden?
+4. ¿Se permite repetir elementos?
+5. ¿Se seleccionan todos los elementos o sólo una parte?
+
+Una buena práctica es describir primero el proceso con palabras y después elegir la fórmula.
+
+## Errores frecuentes
+
+- utilizar combinaciones cuando el orden sí importa;
+- utilizar permutaciones cuando sólo interesa el grupo seleccionado;
+- olvidar si la repetición está permitida;
+- multiplicar cantidades correspondientes a alternativas excluyentes;
+- sumar cantidades correspondientes a etapas consecutivas;
+- contar dos veces resultados que representan la misma selección;
+- aplicar una fórmula antes de entender qué constituye un resultado diferente.
+
+## Ideas clave
+
+- El principio aditivo combina alternativas excluyentes.
+- El principio multiplicativo combina etapas sucesivas.
+- Los diagramas de árbol ayudan a visualizar procesos por etapas.
+- El factorial cuenta ordenamientos completos.
+- Los arreglos se utilizan cuando el orden importa.
+- Las combinaciones se utilizan cuando el orden no importa.
+- La repetición cambia de manera esencial el conteo.
+- R permite enumerar y comprobar espacios muestrales finitos.
+
+## Ejercicios
+
+1. Una cafetería ofrece 4 bebidas y 6 alimentos. ¿Cuántos desayunos distintos pueden formarse eligiendo una bebida y un alimento?
+2. ¿Cuántas claves de tres letras pueden formarse con 26 letras si se permite repetición?
+3. Resuelve el ejercicio anterior si no se permite repetición.
+4. ¿De cuántas maneras pueden ordenarse 8 libros distintos en un estante?
+5. De 12 estudiantes, ¿de cuántas maneras pueden asignarse los cargos de presidente, secretario y tesorero?
+6. De los mismos 12 estudiantes, ¿cuántos comités distintos de 3 personas pueden formarse?
+7. ¿Cuántos resultados posibles tiene una secuencia de 5 lanzamientos de moneda?
+8. ¿Cuántos arreglos distintos pueden formarse con las letras de la palabra PROBABILIDAD? Identifica primero las letras repetidas.
+9. Usa R para enumerar todos los resultados de cuatro transmisiones, cada una correcta o errónea, y verifica el principio multiplicativo.
+10. ★ Diseña un problema de ingeniería en el que usar una combinación en lugar de un arreglo produzca una respuesta incorrecta. Explica por qué.
+
+## Referencias del capítulo
+
+El tratamiento de técnicas de conteo sigue el enfoque habitual de probabilidad para ingeniería y ciencias de @walpole2012, @devore2016, @montgomery2018 y @johnson2018, complementado con verificación computacional mediante R inspirada en @kerns2010.
