@@ -1,0 +1,48 @@
+name: Sincronizar estable desde desarrollo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-from-dev.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obtener repositorio estable
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clonar versión de desarrollo
+        run: |
+          git clone --depth 1 https://github.com/gilbertorodriguez59/introduccion-probabilidad-r-geogebra-dev.git /tmp/dev
+
+      - name: Sincronizar archivos
+        run: |
+          rsync -a --delete \
+            --exclude '.git/' \
+            --exclude '.github/workflows/sync-from-dev.yml' \
+            /tmp/dev/ ./
+          # Ajustar enlaces y referencias del repositorio de desarrollo al estable.
+          grep -rlZ 'introduccion-probabilidad-r-geogebra-dev' . \
+            --exclude-dir=.git \
+            --exclude='sync-from-dev.yml' \
+            | xargs -0 -r sed -i 's/introduccion-probabilidad-r-geogebra-dev/introduccion-probabilidad-r-geogebra/g'
+
+      - name: Guardar edición estable
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "La edición estable ya está sincronizada."
+          else
+            git commit -m "Publicar edición estable desde desarrollo [skip ci]"
+            git push origin main
+          fi
