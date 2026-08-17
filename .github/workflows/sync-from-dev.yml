@@ -27,13 +27,18 @@ jobs:
         run: |
           rsync -a --delete \
             --exclude '.git/' \
-            --exclude '.github/workflows/sync-from-dev.yml' \
+            --exclude '.github/workflows/' \
             /tmp/dev/ ./
-          # Ajustar enlaces y referencias del repositorio de desarrollo al estable.
           grep -rlZ 'introduccion-probabilidad-r-geogebra-dev' . \
             --exclude-dir=.git \
-            --exclude='sync-from-dev.yml' \
+            --exclude-dir=.github/workflows \
             | xargs -0 -r sed -i 's/introduccion-probabilidad-r-geogebra-dev/introduccion-probabilidad-r-geogebra/g'
+
+      - name: Verificar capítulos antes de publicar
+        run: |
+          test -f 17-transformaciones-variables.qmd
+          grep -q '17-transformaciones-variables.qmd' _quarto.yml
+          echo 'Capítulo 17 y _quarto.yml verificados.'
 
       - name: Guardar edición estable
         run: |
@@ -43,6 +48,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "La edición estable ya está sincronizada."
           else
-            git commit -m "Publicar edición estable desde desarrollo [skip ci]"
+            git commit -m "Publicar edición estable completa hasta capítulo 17 [skip ci]"
             git push origin main
           fi
