@@ -27,11 +27,11 @@ jobs:
         run: |
           rsync -a --delete \
             --exclude '.git/' \
-            --exclude '.github/workflows/' \
+            --exclude '.github/' \
             /tmp/dev/ ./
           grep -rlZ 'introduccion-probabilidad-r-geogebra-dev' . \
             --exclude-dir=.git \
-            --exclude-dir=.github/workflows \
+            --exclude-dir=.github \
             | xargs -0 -r sed -i 's/introduccion-probabilidad-r-geogebra-dev/introduccion-probabilidad-r-geogebra/g'
 
       - name: Verificar capítulos antes de publicar
