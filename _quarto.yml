@@ -5,6 +5,8 @@ project:
     - figures/**
     - interactivos/**
     - html/**
+    - notebooks/**
+    - cuadernos-r/**
 
 book:
   title: "Introducción a la Probabilidad con R y GeoGebra"
@@ -22,6 +24,20 @@ book:
     - 01-incertidumbre-probabilidad.qmd
     - 02-espacios-eventos.qmd
     - 03-conteo-probabilidad.qmd
+    - 04-axiomas-probabilidad.qmd
+    - 05-condicional-independencia.qmd
+    - 06-probabilidad-total-bayes.qmd
+    - 07-variable-aleatoria-cdf.qmd
+    - 08-variables-discretas-pmf.qmd
+    - 09-variables-continuas-densidad.qmd
+    - 10-esperanza-varianza-chebyshev.qmd
+    - 11-distribuciones-discretas-especiales.qmd
+    - 12-hipergeometrica-poisson.qmd
+    - 13-distribuciones-continuas-especiales.qmd
+    - 14-gamma-weibull-beta.qmd
+    - 15-variables-conjuntas-marginales-condicionales.qmd
+    - 16-esperanza-covarianza-correlacion.qmd
+    - 17-transformaciones-variables.qmd
     - references.qmd
   page-footer:
     center: "Licencia CC BY-NC-SA 4.0"
@@ -37,6 +53,8 @@ bibliography: references.bib
 lang: es
 number-depth: 2
 toc-depth: 3
+filters:
+  - filters/materiales.lua
 
 format:
   html:

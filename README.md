@@ -1,7 +1,7 @@
-# Introducción a la Probabilidad con R y GeoGebra
+# Introducción a la Probabilidad con R y GeoGebra — Desarrollo
 
-Repositorio estable del libro **Introducción a la Probabilidad con R y GeoGebra: teoría, simulación y aplicaciones para ingeniería y ciencias**.
+Repositorio de desarrollo del libro **Introducción a la Probabilidad con R y GeoGebra: teoría, simulación y aplicaciones para ingeniería y ciencias**.
 
 Autor: Jesús Gilberto Rodríguez Escobedo.
 
-Esta edición contiene los capítulos revisados y aprobados provenientes del repositorio de desarrollo.
+Este repositorio contiene la versión de trabajo. Los capítulos se revisarán aquí antes de transferirse a la versión estable.
